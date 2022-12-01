@@ -1,0 +1,53 @@
+﻿@model List<AppUser>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+}
+
+
+<html>
+
+<head>
+
+</head>
+<body>
+    
+    <div class="ticketlist-container">
+        <div class="row" style="overflow:auto">
+            <h2>Tickets</h2>
+            <table class="table table-hover table-striped table-dark table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email Confirmation</th>
+                        <th scope="col">Category</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var items in Model.Where(i=>i.CategoryId!=null))
+                    {
+                        <tr>
+
+                            <td>@items.UserName</td>
+                            <td>@items.EmailConfirmed</td>
+                            <td>@items.Category.categoryName</td>
+
+                            <td>
+                                <a class="btn btn-warning" asp-action="EmployeeDelete"
+                                   asp-controller="Employee" asp-route-id="@items.Id">Delete</a>
+                            </td>
+
+
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+</body>
+</html>

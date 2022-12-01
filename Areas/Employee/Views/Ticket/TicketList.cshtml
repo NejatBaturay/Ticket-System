@@ -1,0 +1,177 @@
+﻿@model List<Ticket>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<html>
+
+<head>
+
+</head>
+<body>
+    <div class="ticketlist-employee-container-all">
+        <div class="row" style="text-align:center;width:100%;">
+            <div class="col-4" id="freshticket"><btn class="btn btn-warning employee-ticket-buttons">Fresh Tickets(@Model.Where(i => i.TicketStatusId == 1).Count())</btn></div>
+            <div class="col-4"  id="youractiveticket" ><btn class="btn btn-primary employee-ticket-buttons">Your Active (@Model.Where(i => ((i.TicketStatusId == 2) && (i.AppUserIdEmployee == ViewBag.User.Id))).Count())</btn></div>
+            <div class="col-4"  id="yourclosedticket" ><btn class="btn btn-success employee-ticket-buttons" >Your Closed Tickets (@Model.Where(i => ((i.TicketStatusId == 3) && (i.AppUserIdEmployee == ViewBag.User.Id))).Count())</btn></div>
+        </div>
+        <div id="freshticketdiv" class="ticketlist-employee-container">
+
+            <table class="table table-hover table-striped table-dark table-bordered" style="text-align:center;">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Registiration Number</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Category</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var items in Model.Where(i => i.TicketStatusId == 1))
+                    {
+                        <tr>
+
+                            <td>@items.ticketerName</td>
+                            <td>@items.registirationNumber</td>
+                            @{if (items.ticketDesc.Length > 20)
+                                {
+                                    <td>@items.ticketDesc.ToString().Substring(0, 20)...</td>
+                                }
+                                else
+                                {
+                                    <td>@items.ticketDesc</td>
+                                }
+                            }
+                            <td>@items.Category.categoryName</td>
+                            <td>
+                                <a class="btn btn-primary" asp-action="TicketDetail"
+                                   asp-controller="Ticket" asp-route-id="@items.Id">Detail</a>
+                            </td>
+
+
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+
+        </div>
+
+
+        <div id="youractiveticketsdiv" class="ticketlist-employee-container ">
+
+            <table class="table table-hover table-striped table-dark table-bordered table-responsive">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Registiration Number</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Category</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var items in Model.Where(i => ((i.TicketStatusId == 2) && (i.AppUserIdEmployee == ViewBag.User.Id))))
+                    {
+
+                        <tr>
+
+                            <td>@items.ticketerName</td>
+                            <td>@items.registirationNumber</td>
+                            @{if (items.ticketDesc.Length > 20)
+                                {
+                                    <td>@items.ticketDesc.ToString().Substring(0, 20)...</td>
+                                }
+                                else
+                                {
+                                    <td>@items.ticketDesc</td>
+                                }
+                            }
+                            <td>@items.Category.categoryName</td>
+
+                            <td>
+                                <a class="btn btn-primary" asp-action="TicketDetail"
+                                   asp-controller="Ticket" asp-route-id="@items.Id">Detail</a>
+                            </td>
+
+
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+
+        </div>
+
+
+
+        <div id="yourclosedticketsdiv" class="ticketlist-employee-container ">
+
+            <table class="table table-hover table-striped table-dark table-bordered table-responsive">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Registiration Number</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Category</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var items in Model.Where(i => ((i.TicketStatusId == 3) && (i.AppUserIdEmployee == ViewBag.User.Id))))
+                    {
+
+                        <tr>
+
+                            <td>@items.ticketerName</td>
+                            <td>@items.registirationNumber</td>
+                            @{if (items.ticketDesc.Length > 20)
+                                {
+                                    <td>@items.ticketDesc.ToString().Substring(0, 20)...</td>
+                                }
+                                else
+                                {
+                                    <td>@items.ticketDesc</td>
+                                }
+                            }
+                            <td>@items.Category.categoryName</td>
+
+                            <td>
+                                <a class="btn btn-primary" asp-action="TicketDetail"
+                                   asp-controller="Ticket" asp-route-id="@items.Id">Detail</a>
+                            </td>
+
+
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <script>
+
+        $(document).ready(function () {
+            $("#freshticket").click(function () {
+                $("#freshticketdiv").slideToggle("slow");
+            });
+            $("#youractiveticket").click(function () {
+                $("#youractiveticketsdiv").slideToggle("slow");
+            });
+            $("#yourclosedticket").click(function () {
+                $("#yourclosedticketsdiv").slideToggle("slow");
+            });
+        });
+
+    </script>
+</body>
+ </html>

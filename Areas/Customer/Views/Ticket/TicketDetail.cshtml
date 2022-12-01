@@ -1,0 +1,129 @@
+﻿@model Ticket 
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="ticketdetail-employee-container">
+    <div class="row">
+        <div class="col-2">
+
+        </div>
+        <div class="col-8">
+            <table class="table table-hover table-bordered table-primary table-striped">
+
+                <tr>
+                    <th>Name</th>
+                    <td>@Model.ticketerName</td>
+                </tr>
+                <tr>
+                    <th>RegistirationNumber</th>
+                    <td>@Model.registirationNumber</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>@Model.ticketDesc</td>
+                </tr>
+                <tr>
+                    <th>Ticket Creation Time</th>
+                    <td>@Model.Created</td>
+                </tr>
+
+
+
+            </table>
+            <div class="notes">
+                <div class="row m-0">
+
+                    <div class="col-12">
+
+                        @if (ViewBag.Notes != null)
+                        {
+                            foreach (var notes in ViewBag.Notes)
+                            {
+
+                                @if (notes.IsEmployee == true)
+                                {
+                                    <div class="row">
+
+                                        <div class="col-6">
+                                            <div class="notesemployee">
+
+
+                                                <h6 class="noteheader">
+                                                    @notes.noteContent
+
+                                                </h6>
+
+                                            </div>
+                                            <br />
+                                        </div>
+                                        <br />
+                                        <div class="col-6">
+
+                                        </div>
+                                    </div>
+                                }
+
+                                else
+                                {
+                                    <div class="row">
+                                        <div class="col-6">
+
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="notescustomer">
+
+
+                                                <h6 class="noteheader">
+                                                    @notes.noteContent
+
+                                                </h6>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                }
+
+
+                            }
+
+                        }
+
+
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="note-add">
+                <form method="post">
+
+                    <div class="row" style="text-align:center;">
+
+                        <div class="col-10 textnote">
+
+                            <input type="text" class="noteText" rows="2" placeholder="Add your note here" name="textnote" />
+                        </div>
+
+                        <div class="col-2 textnote">
+                            <button class="btn btn-success w-100" asp-action="AddNote" asp-controller="Ticket" asp-route-id="@Model.Id" type="submit">Send📨</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="col-2">
+
+        </div>
+    </div>
+    <script>
+        $('.notes').scrollTop($('.notes')[0].scrollHeight);
+    </script>
+
+</div>

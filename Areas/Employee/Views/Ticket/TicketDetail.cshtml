@@ -1,0 +1,179 @@
+﻿@model Ticket
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+
+<body onload="disable();">
+
+    <div class="ticketdetail-employee-container">
+        <div class="row">
+            <div class="col-2">
+
+            </div>
+            <div class="col-8">
+                <table class="table table-hover table-bordered table-primary table-striped">
+
+                    <tr>
+                        <th>Name</th>
+                        <td>@Model.ticketerName</td>
+                    </tr>
+                    <tr>
+                        <th>RegistirationNumber</th>
+                        <td>@Model.registirationNumber</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>@Model.ticketDesc</td>
+                    </tr>
+                    <tr>
+                        <th>Ticket Creation Time</th>
+                        <td>@Model.Created</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Status
+                        </th>
+                        <td>
+                            <form method="post">
+                                <button class="btn btn-success" id="Status1" asp-area="Employee" asp-action="ChangeStatus"
+                                        asp-controller="Ticket" asp-route-id="@Model.Id" asp-route-id2="@Model.TicketStatusId"
+                                        onclick="disable()" type="submit">
+                                    Start to Fix
+                                </button>
+                                <button class="btn btn-warning" id="Status2" asp-action="ChangeStatus"
+                                        asp-area="Employee" asp-controller="Ticket" asp-route-id="@Model.Id" asp-route-id2="@Model.TicketStatusId"
+                                        onclick="disable()" type="submit">
+                                    Problem Fixed and Closed
+                                </button>
+                            </form>
+                        </td>
+
+                    </tr>
+
+
+
+
+                </table>
+
+                <button id="opentextnote" class="btn btn-success" type="button">Hide</button>
+                <div class="notes">
+                    <div class="row">
+
+                        <div class="col-12">
+
+                            @{if (ViewBag.Notes != null)
+                                {
+                                    foreach (var notes in ViewBag.Notes)
+                                    {
+                                        @if (notes.IsEmployee == false)
+                                        {
+                                            <div class="row">
+
+                                                <div class="col-6">
+                                                    <div class="notesemployee">
+
+
+                                                        <h6 class="noteheader">
+                                                            @notes.noteContent
+
+                                                        </h6>
+
+                                                    </div>
+                                                    <br />
+                                                </div>
+                                                <br />
+                                                <div class="col-6">
+
+                                                </div>
+                                            </div>
+                                        }
+
+                                        else
+                                        {
+                                            <div class="row">
+                                                <div class="col-6">
+
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="notescustomer">
+
+
+                                                        <h6 class="noteheader">
+                                                            @notes.noteContent
+
+                                                        </h6>
+
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+
+                </div>
+                <div class="note-add">
+                    <form method="post">
+
+                        <div class="row" style="text-align:center;">
+
+                            <div class="col-10 textnote">
+
+                                <input type="text" class="noteText" rows="2" placeholder="Add your note here" name="textnote" />
+                            </div>
+
+                            <div class="col-2 textnote">
+                                <button id="opentextnote" class="btn btn-success" asp-action="AddNote" asp-controller="Ticket" asp-route-id="@Model.Id" type="submit">Send📨</button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+
+                <div class="col-2">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function disable(){
+
+
+           if(@Model.TicketStatusId!=2){
+               console.log("disabled");
+               document.getElementById("Status2").setAttribute("disabled","disabled");
+           }
+
+
+           if(@Model.TicketStatusId!=1){
+               document.getElementById("Status1").setAttribute("disabled","disabled");
+               if(@Model.TicketStatusId==2){
+                   document.getElementById("Status2").setAttribute("enabled","enabled");
+               }
+
+           }
+
+    }
+
+    $(document).ready(function () {
+        $("#opentextnote").click(function () {
+            $(".notes").fadeToggle("slow");
+            $(".textnote").fadeToggle("slow");
+        });
+    });
+    </script>
+    <script>
+        $('.notes').scrollTop($('.notes')[0].scrollHeight);
+    </script>
+</body>

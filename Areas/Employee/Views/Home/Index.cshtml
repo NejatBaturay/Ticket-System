@@ -1,0 +1,116 @@
+﻿@model List<int>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+
+<body>
+    <div class="row employee-row">
+
+
+
+        <div class="col-lg-4 col-sm-12">
+
+        
+       
+
+
+        </div>
+
+
+        <div class="col-lg-4 col-sm-12">
+
+
+
+            <canvas id="ticketstatuschart" style="width:100%;height:85%"></canvas>
+
+
+            <a asp-action="TicketList" asp-controller="Ticket" class="btn btn-outline-dark" style="margin-top:20px;">List All Tickets</a>
+
+
+
+        </div>
+
+        <div class="col-lg-4 col-sm-12">
+            <div class="infoUser">
+                <img src="https://cdn-icons-png.flaticon.com/512/554/554744.png" class="createImages">
+                <h2>Hoşgeldiniz</h2>
+                <br />
+                <h3>@ViewBag.Name  @ViewBag.surName</h3>
+                <br />
+                <h3>Saat : @ViewBag.signInDate</h3>
+                <br />
+                <a asp-action="SignOutCustomer" asp-controller="Home" class="btn btn-outline-danger">SignOut</a>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <script>
+        var xvalues = ["Fresh Tickets", "Your active Tickets"];
+        var yvalues = [@Model[0],@Model[1]];
+        var chartColors = [
+        "#FFFF00",
+        "#0000FF"   
+        ];
+        var chart = document.getElementById("ticketstatuschart");
+        if (yvalues.reduce((x, y) => x + y,0) != 0) {
+            new Chart(chart, {
+                type: "bar",
+                data: {
+                    labels: xvalues,
+                    datasets: [{
+                        backgroundColor: chartColors,
+                        data: yvalues
+                    }]
+                },
+                options: {
+                    legend: {display:false},
+                    title: {
+                        display: true,
+                        text: "Your Ticket Status Chart"
+                    },
+                    scales: {
+                        xAxes: [{
+                            gridLines: { display: false }
+                        }],
+                        yAxes: [{
+                            ticks: {
+
+                                beginAtZero: true,
+                                stepSize: 1
+                            }
+                        }]
+                    }
+
+                }
+            });
+        }
+
+        else {
+            new Chart(chart, {
+                type: "doughnut",
+                data: {
+                    labels : ["No Ticket Belongs to You"],
+                    datasets: [{
+                        backgroundColor: "#FFFFFF",
+                        data: [1]
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "There is no active tickets belongs to you"
+                    },
+
+                }
+            });
+        }
+    </script>
+
+</body>

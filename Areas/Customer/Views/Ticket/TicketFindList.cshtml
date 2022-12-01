@@ -1,0 +1,137 @@
+﻿@model List<Ticket>
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<html>
+
+
+<body >
+
+    <form id="ticketFindForm" asp-action="TicketFindList" asp-controller="Ticket" method="post" style="margin-top:5%;">
+        <div class="row slide-in-blurred-top" style="text-align:center;">
+            <div class="col-8">
+                <input type="number" class="form-control" id="ticketNumber"
+                       name="ticketNumber" placeholder="Enter Your Ticket Number Here"
+                       style="width:100%" />
+            </div>
+            <div class="col-4">
+                <button type="submit" onclick="changecolor();" class="btn btn-outline-dark mb-2" style="width:100%;">Find Ticket</button>
+            </div>
+        </div>
+    </form>
+
+
+
+    @{ if (@Model != null)
+        {
+
+
+<div class="row ticketFindList slide-in-blurred-top">
+          
+            <div class="col-12">
+                <div class="ticketlist-container">
+
+                    <table class="table table-hover table-striped table-secondary table-bordered"
+                           style="text-align:center">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Registiration Number</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Processes</th>
+                                <th scope="col">Messages to you</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @{foreach (var items in Model) {
+                            <tr>
+
+                                <td>@items.ticketerName</td>
+                                <td>@items.registirationNumber</td>
+                                @if (items.ticketDesc.Length > 20)
+                                {
+                                <td>@items.ticketDesc.Substring(0, 20)...</td>
+                                }
+                                else
+                                {
+                                      <td>@items.ticketDesc</td>
+                                }
+                                <td>@items.Category.categoryName</td>
+                                <td>
+                                    @if (items.TicketStatusId == 1)
+                                    {<button id="statusbutton" class="btn btn-success">@items.TicketStatus.ticketStatusName</button>}
+                                    @if (items.TicketStatusId == 2)
+                                    {<button id="statusbutton" class="btn btn-danger">@items.TicketStatus.ticketStatusName</button>}
+                                    @if (items.TicketStatusId == 3)
+                                    {<button id="statusbutton" class="btn btn-warning">@items.TicketStatus.ticketStatusName</button>}
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary" asp-action="TicketDetail"
+                                       asp-controller="Ticket" asp-route-id="@items.Id">Detail</a>
+                                </td>
+
+
+                            </tr>
+                                    }
+                                }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+              
+
+            </div>
+            
+               
+            </div>
+            @*<script>
+            function changecolor() {
+
+                    if (@Model.TicketStatusId== 1) {
+                        document.getElementById("statusbutton").style.backgroundColor = "green";
+                    }
+                    if (@Model.TicketStatusId== 2) {
+                        document.getElementById("statusbutton").style.backgroundColor = "purple";
+                    }
+                    if (@Model.TicketStatusId== 3) {
+                        document.getElementById("statusbutton").style.backgroundColor = "blue";
+                    }
+                }
+
+            </script>*@
+            }
+
+
+            }
+
+
+
+            @*<script>
+                $(document).ready(function () {
+
+
+                    $("#ticketFindForm").validate({
+
+                        rules: {
+                            ticketNumber: "required"
+                        },
+                        messages: {
+                            ticketNumber: "*Please enter a valid ticket number"
+                        }
+
+
+                    });
+
+                });
+
+            </script>*@
+
+</body>
+</html>

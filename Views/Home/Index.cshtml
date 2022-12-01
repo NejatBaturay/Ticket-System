@@ -1,0 +1,57 @@
+﻿@model UserSignIn
+<html>
+
+<head>
+
+</head>
+<body>
+    <div class="row div-faderow slide-in-blurred-top">
+        <div class="col-2">
+
+        </div>
+
+        <div class="col-8 signInForm">
+            <h3>User SignIn</h3>
+            <img src="https://cdn-icons-png.flaticon.com/512/4233/4233839.png" class="createImages">
+            <form  asp-action="SignIn" asp-controller="Home" method="post">
+                <div class="mb-3" >
+                    <label for="exampleInputEmail1" class="form-label" Employee Name>Employee Name</label>
+                    <input type="text" asp-for="userName" class="form-control" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label" Employee Password>Employee Password</label>
+                    <input type="password" asp-for="userPassword" class="form-control">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Sign In Employee</button>
+            </form>
+            <h4><div asp-validation-summary="ModelOnly" class="text-danger"></div></h4>
+        </div>
+        <div class="col-2">
+
+        </div>
+
+    </div>
+
+
+
+
+    @*<script>
+        $(document).ready(function () {
+            $("#divfaderow").fadeIn(2000);
+
+        });
+        $(document).ready(function () {
+            $("#divfaderow").animate(
+                { top: "+=150px" }, 1000);
+
+
+        });
+
+
+    </script>*@
+    
+</body>
+
+
+</html>

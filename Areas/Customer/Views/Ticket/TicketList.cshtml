@@ -1,0 +1,41 @@
+﻿@model List<Ticket>
+
+<html>
+
+<body>
+    <div class="ticketlist-container">
+            <table class="table table-hover table-striped table-dark table-bordered" >
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Registiration Number</th>
+              <th scope="col">Description</th>
+              <th scope="col">Category</th>
+              <th scope="col">Processes</th>
+            </tr>
+          </thead>
+          <tbody>
+             @foreach(var items in Model){
+            <tr>
+             
+              <td>@items.ticketerName</td>
+              <td>@items.registirationNumber</td>
+              <td>@items.ticketDesc.ToString().Substring(0,15)...</td>
+              <td>@items.Category.categoryName</td>
+                    <td>  <button class="btn btn-success">@items.TicketStatus.ticketStatusName</button>
+                      </td>
+         
+              
+            </tr>
+             }
+     
+          </tbody>
+        </table>
+       
+        </div>
+
+
+</body>
+ </html>
+
+
